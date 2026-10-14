@@ -254,6 +254,22 @@ function toast(msg){
   window._tt=setTimeout(()=>t.classList.remove('show'),2000);
 }
 
+/* ============ АВТОФОРМАТ ТЕЛЕФОНА ============ */
+function formatPhone(input){
+  let v = input.value.replace(/\D/g,'');
+  if(v.startsWith('7') || v.startsWith('8')) v = v.slice(1);
+  v = v.slice(0,10);
+  
+  let out = '+7';
+  if(v.length > 0) out += ' (' + v.slice(0,3);
+  if(v.length >= 3) out += ')';
+  if(v.length > 3) out += ' ' + v.slice(3,6);
+  if(v.length > 6) out += '-' + v.slice(6,8);
+  if(v.length > 8) out += '-' + v.slice(8,10);
+  
+  input.value = out;
+}
+
 /* ============ КАЛЬКУЛЯТОР ============ */
 function syncFromRange(which){
   const priceEl=document.getElementById('c-price');
@@ -326,7 +342,10 @@ function openAnketa(){
       <input id="a-name" placeholder="Фамилия Имя Отчество"></div>
 
     <div class="field"><label>Телефон *</label>
-      <input id="a-phone" type="tel" placeholder="+7 ___ ___-__-__"></div>
+      <input id="a-phone" type="tel" value="+7 " 
+        onfocus="if(this.value==='+7 ')this.setSelectionRange(3,3)"
+        oninput="formatPhone(this)"
+        placeholder="+7 (___) ___-__-__"></div>
 
     <div class="field"><label>Дата рождения</label>
       <input id="a-birth" type="date"></div>
@@ -403,7 +422,7 @@ function sendToWhatsApp(){
   const product=document.getElementById('a-product').value.trim();
 
   if(!name){toast('Введите ФИО');return;}
-  if(!phone){toast('Введите телефон');return;}
+  if(phone.length < 18){toast('Введите телефон полностью');return;}
   if(!product){toast('Укажите товар');return;}
 
   const text=buildMessage();
