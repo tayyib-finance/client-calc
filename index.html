@@ -141,13 +141,13 @@ pointer-events:none;max-width:88%;text-align:center;}
     <div class="lbl">Стоимость товара или услуги:</div>
     <input type="text" class="num-field" id="c-price-v" value="50 000 ₽"
       onfocus="editNum('price')" onblur="applyNum('price')">
-    <input type="range" id="c-price" min="1000" max="1000000" step="1000"
+    <input type="range" id="c-price" min="1000" max="10000000" step="10000"
       value="50000" oninput="syncFromRange('price')">
 
     <div class="lbl">Первоначальный взнос (мин. 20%):</div>
     <input type="text" class="num-field" id="c-down-v" value="10 000 ₽"
       onfocus="editNum('down')" onblur="applyNum('down')">
-    <input type="range" id="c-down" min="0" max="1000000" step="1000"
+    <input type="range" id="c-down" min="0" max="5000000" step="10000"
       value="10000" oninput="syncFromRange('down')">
 
     <div class="lbl">Срок рассрочки (мес.):</div>
@@ -249,6 +249,11 @@ const SHOPS = {
 const DEFAULT_RATE = 0.05;
 const DEFAULT_FREE = 0;
 
+/* Лимиты */
+const MAX_PRICE = 10000000;  // 10 млн ₽
+const MAX_DOWN  = 5000000;   // 5 млн ₽
+const MIN_PRICE = 1000;
+
 const urlParams = new URLSearchParams(window.location.search);
 const shopCode = urlParams.get('m') || 'default';
 const SHOP = SHOPS[shopCode] ||
@@ -297,8 +302,8 @@ function syncFromRange(which){
   const downEl=document.getElementById('c-down');
   const monthsEl=document.getElementById('c-months');
   if(which==='price'){
-    downEl.max=Math.round(+priceEl.value/2);
-    if(+downEl.value<priceEl.value*0.2)
+    downEl.max=Math.round(+priceEl.value);
+    if(+downEl.value < priceEl.value*0.2)
       downEl.value=Math.round(priceEl.value*0.2);
   }
   const price=+priceEl.value;
@@ -328,7 +333,7 @@ function applyNum(which){
   const valueEl=document.getElementById(mapV[which]);
   let val=parseInt(valueEl.value.replace(/\D/g,''))||0;
   if(which==='months'){val=Math.max(1,Math.min(24,val));}
-  if(which==='price'){val=Math.max(1000,Math.min(1000000,val));}
+  if(which==='price'){val=Math.max(MIN_PRICE,Math.min(MAX_PRICE,val));}
   if(which==='down'){
     const p=+document.getElementById('c-price').value;
     val=Math.max(Math.round(p*0.2),Math.min(p,val));
