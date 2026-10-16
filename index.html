@@ -234,13 +234,12 @@ pointer-events:none;max-width:88%;text-align:center;}
 <script>
 /* ============ НАСТРОЙКИ МАГАЗИНОВ ============ */
 const SELLER_PHONE = '79887836677';
-const SELLER_PHONE_FMT = '+7 988 783-66-77';
 
-/* Магазины и их ставки:
-   ?m=1 — 5% стандарт
-   ?m=2 — 3.7% стандарт
-   ?m=3 — 5% + 3 мес без наценки
-   ?m=4 — 3.7% + 3 мес без наценки */
+/* Магазины:
+   ?m=1 — 5%   — без акции
+   ?m=2 — 3.7% — без акции
+   ?m=3 — 5%   — 3 месяца без наценки
+   ?m=4 — 3.7% — 3 месяца без наценки */
 const SHOPS = {
   '1': {name:'Магазин №1', rate:0.05,  freeMonths:0},
   '2': {name:'Магазин №2', rate:0.037, freeMonths:0},
@@ -252,7 +251,8 @@ const DEFAULT_FREE = 0;
 
 const urlParams = new URLSearchParams(window.location.search);
 const shopCode = urlParams.get('m') || 'default';
-const SHOP = SHOPS[shopCode] || {name:'Tayyib Finance', rate:DEFAULT_RATE, freeMonths:DEFAULT_FREE};
+const SHOP = SHOPS[shopCode] ||
+  {name:'Tayyib Finance', rate:DEFAULT_RATE, freeMonths:DEFAULT_FREE};
 const RATE = SHOP.rate;
 const FREE_MONTHS = SHOP.freeMonths;
 
@@ -268,7 +268,7 @@ function toast(msg){
 }
 
 /* Расчёт с учётом бесплатных месяцев */
-function calcMonthly(price, down, months){
+function calcMurabaha(price, down, months){
   const fin = price - down;
   const paidMonths = Math.max(0, months - FREE_MONTHS);
   const markup = fin * RATE * paidMonths;
@@ -310,7 +310,7 @@ function syncFromRange(which){
   updateCalc(price,down,months);
 }
 function updateCalc(price,down,months){
-  const c = calcMonthly(price,down,months);
+  const c = calcMurabaha(price,down,months);
   document.getElementById('c-monthly').textContent=fmtR(c.monthly);
   document.getElementById('c-markup').textContent=fmtR(c.markup);
   document.getElementById('c-total').textContent=fmtR(c.total);
@@ -359,12 +359,12 @@ function openAnketa(){
   const price=+document.getElementById('c-price').value;
   const down=+document.getElementById('c-down').value;
   const months=+document.getElementById('c-months').value;
-  const c = calcMonthly(price,down,months);
+  const c = calcMurabaha(price,down,months);
 
   window._anketaData={price,down,months,
     markup:c.markup,total:c.total,monthly:c.monthly};
 
-  const promoRow = FREE_MONTHS > 0 ? 
+  const promoRow = FREE_MONTHS > 0 ?
     '<div class="row"><span class="k">Бесплатных месяцев</span>'+
     '<span class="v promo">'+FREE_MONTHS+' 🎁</span></div>' : '';
 
