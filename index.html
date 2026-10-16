@@ -23,6 +23,11 @@ font-size:26px;font-weight:800;flex-shrink:0;}
 .hero .title{font-size:19px;font-weight:800;letter-spacing:-.3px;
 margin-bottom:2px;}
 .hero .sub{font-size:12px;opacity:.75;line-height:1.35;}
+.promo-badge{background:linear-gradient(135deg,#c8dd5f 0%,#a8c93f 100%);
+color:var(--dark);border-radius:16px;padding:14px 18px;margin-bottom:14px;
+display:flex;align-items:center;gap:12px;font-weight:700;font-size:14px;
+line-height:1.35;}
+.promo-badge .gift{font-size:24px;flex-shrink:0;}
 .calc-box{background:linear-gradient(135deg,#2d3a34 0%,#1a241f 100%);
 color:#fff;border-radius:24px;padding:22px 20px;margin-bottom:14px;}
 .calc-box .calc-title{font-size:22px;font-weight:800;margin-bottom:18px;
@@ -109,6 +114,7 @@ padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);}
 .anketa-preview .row:last-child{border-bottom:none;}
 .anketa-preview .row .k{opacity:.7;}
 .anketa-preview .row .v{font-weight:700;color:var(--lime);}
+.anketa-preview .row .v.promo{color:#c8dd5f;}
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
 background:var(--dark);color:#fff;padding:12px 20px;border-radius:14px;
 font-size:14px;z-index:999;opacity:0;transition:opacity .25s;
@@ -126,6 +132,8 @@ pointer-events:none;max-width:88%;text-align:center;}
       <div class="sub">по нормам Шариата · Мурабаха</div>
     </div>
   </div>
+
+  <div id="promoBlock"></div>
 
   <div class="calc-box">
     <div class="calc-title">Рассчитайте рассрочку</div>
@@ -229,19 +237,24 @@ const SELLER_PHONE = '79887836677';
 const SELLER_PHONE_FMT = '+7 988 783-66-77';
 
 /* Магазины и их ставки:
-   ?m=1 — Магазин №1 — 5%
-   ?m=2 — Магазин №2 — 3.7%
-   без параметра — 5% (по умолчанию) */
+   ?m=1 — 5% стандарт
+   ?m=2 — 3.7% стандарт
+   ?m=3 — 5% + 3 мес без наценки
+   ?m=4 — 3.7% + 3 мес без наценки */
 const SHOPS = {
-  '1': {name:'Магазин №1', rate:0.05},
-  '2': {name:'Магазин №2', rate:0.037}
+  '1': {name:'Магазин №1', rate:0.05,  freeMonths:0},
+  '2': {name:'Магазин №2', rate:0.037, freeMonths:0},
+  '3': {name:'Акция 5%',   rate:0.05,  freeMonths:3},
+  '4': {name:'Акция 3.7%', rate:0.037, freeMonths:3}
 };
 const DEFAULT_RATE = 0.05;
+const DEFAULT_FREE = 0;
 
 const urlParams = new URLSearchParams(window.location.search);
 const shopCode = urlParams.get('m') || 'default';
-const SHOP = SHOPS[shopCode] || {name:'Tayyib Finance', rate:DEFAULT_RATE};
+const SHOP = SHOPS[shopCode] || {name:'Tayyib Finance', rate:DEFAULT_RATE, freeMonths:DEFAULT_FREE};
 const RATE = SHOP.rate;
+const FREE_MONTHS = SHOP.freeMonths;
 
 /* ============ УТИЛИТЫ ============ */
 const fmt = n => Math.round(n).toLocaleString('ru-RU');
@@ -254,19 +267,27 @@ function toast(msg){
   window._tt=setTimeout(()=>t.classList.remove('show'),2000);
 }
 
+/* Расчёт с учётом бесплатных месяцев */
+function calcMonthly(price, down, months){
+  const fin = price - down;
+  const paidMonths = Math.max(0, months - FREE_MONTHS);
+  const markup = fin * RATE * paidMonths;
+  const total = price + markup;
+  const monthly = Math.round((fin + markup) / months);
+  return {fin, markup, total, monthly, paidMonths};
+}
+
 /* ============ АВТОФОРМАТ ТЕЛЕФОНА ============ */
 function formatPhone(input){
   let v = input.value.replace(/\D/g,'');
   if(v.startsWith('7') || v.startsWith('8')) v = v.slice(1);
   v = v.slice(0,10);
-  
   let out = '+7';
   if(v.length > 0) out += ' (' + v.slice(0,3);
   if(v.length >= 3) out += ')';
   if(v.length > 3) out += ' ' + v.slice(3,6);
   if(v.length > 6) out += '-' + v.slice(6,8);
   if(v.length > 8) out += '-' + v.slice(8,10);
-  
   input.value = out;
 }
 
@@ -289,13 +310,10 @@ function syncFromRange(which){
   updateCalc(price,down,months);
 }
 function updateCalc(price,down,months){
-  const fin=price-down;
-  const markup=fin*RATE*months;
-  const total=price+markup;
-  const monthly=Math.round((fin+markup)/months);
-  document.getElementById('c-monthly').textContent=fmtR(monthly);
-  document.getElementById('c-markup').textContent=fmtR(markup);
-  document.getElementById('c-total').textContent=fmtR(total);
+  const c = calcMonthly(price,down,months);
+  document.getElementById('c-monthly').textContent=fmtR(c.monthly);
+  document.getElementById('c-markup').textContent=fmtR(c.markup);
+  document.getElementById('c-total').textContent=fmtR(c.total);
 }
 function editNum(which){
   const map={price:'c-price-v',down:'c-down-v',months:'c-months-v'};
@@ -320,17 +338,35 @@ function applyNum(which){
   if(which==='down')syncFromRange('price');
 }
 
+/* ============ ПРОМО-БЕЙДЖ ============ */
+function renderPromo(){
+  const el = document.getElementById('promoBlock');
+  if(!el) return;
+  if(FREE_MONTHS > 0){
+    el.innerHTML =
+      '<div class="promo-badge">'+
+      '<div class="gift">🎁</div>'+
+      '<div>Первые '+FREE_MONTHS+' месяца без наценки — '+
+      'вы платите только стоимость товара</div>'+
+      '</div>';
+  } else {
+    el.innerHTML = '';
+  }
+}
+
 /* ============ АНКЕТА ============ */
 function openAnketa(){
   const price=+document.getElementById('c-price').value;
   const down=+document.getElementById('c-down').value;
   const months=+document.getElementById('c-months').value;
-  const fin=price-down;
-  const markup=fin*RATE*months;
-  const total=price+markup;
-  const monthly=Math.round((fin+markup)/months);
+  const c = calcMonthly(price,down,months);
 
-  window._anketaData={price,down,months,markup,total,monthly};
+  window._anketaData={price,down,months,
+    markup:c.markup,total:c.total,monthly:c.monthly};
+
+  const promoRow = FREE_MONTHS > 0 ? 
+    '<div class="row"><span class="k">Бесплатных месяцев</span>'+
+    '<span class="v promo">'+FREE_MONTHS+' 🎁</span></div>' : '';
 
   document.getElementById('modalBody').innerHTML=`
     <div style="color:var(--muted);font-size:13px;margin-bottom:14px;
@@ -365,10 +401,11 @@ function openAnketa(){
         <span class="v">${fmtR(down)}</span></div>
       <div class="row"><span class="k">Срок</span>
         <span class="v">${months} мес.</span></div>
+      ${promoRow}
       <div class="row"><span class="k">Ежемесячный платёж</span>
-        <span class="v">${fmtR(monthly)}</span></div>
+        <span class="v">${fmtR(c.monthly)}</span></div>
       <div class="row"><span class="k">Итого к оплате</span>
-        <span class="v">${fmtR(total)}</span></div>
+        <span class="v">${fmtR(c.total)}</span></div>
     </div>
 
     <button class="btn btn-wa" onclick="sendToWhatsApp()"
@@ -400,6 +437,9 @@ function buildMessage(){
     birthFmt=dd+'.'+m+'.'+y;
   }
 
+  const promoLine = FREE_MONTHS > 0 ?
+    '🎁 *Акция:* первые '+FREE_MONTHS+' мес. без наценки\n' : '';
+
   return 'Ассаляму алейкум! Хочу оформить рассрочку.\n\n'+
     '📦 *Товар:* '+product+'\n'+
     (shop?'🏪 *Магазин:* '+shop+'\n':'')+
@@ -407,6 +447,7 @@ function buildMessage(){
     '• Стоимость: '+fmtR(d.price)+'\n'+
     '• Первый взнос: '+fmtR(d.down)+'\n'+
     '• Срок: '+d.months+' мес.\n'+
+    promoLine+
     '• Платёж в месяц: '+fmtR(d.monthly)+'\n'+
     '• Итого: '+fmtR(d.total)+'\n'+
     '\n👤 *Мои данные:*\n'+
@@ -465,6 +506,7 @@ function fallbackCopy(text){
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
+  renderPromo();
   syncFromRange('price');
 });
 </script>
