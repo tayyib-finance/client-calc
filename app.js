@@ -69,6 +69,7 @@ function formatPhone(input){
   input.value = out;
 }
 
+/* ================= РАСЧЁТ ================= */
 function calcMurabaha(price, down, months){
   var fin = price - down;
   var paidMonths = Math.max(0, months - FREE_MONTHS);
@@ -135,7 +136,7 @@ function closeModal(){
   if(m) m.classList.remove('active');
 }
 
-/* ================= АНКЕТА ================= */
+/* ================= АНКЕТА (БЕЗ СВИДЕТЕЛЯ) ================= */
 function openAnketa(){
   var price = +document.getElementById('c-price').value;
   var down = +document.getElementById('c-down').value;
@@ -151,21 +152,23 @@ function openAnketa(){
     '<div class="field"><label>Телефон *</label><input id="a-phone" type="tel" value="+7 " onfocus="if(this.value===\'+7 \')this.setSelectionRange(3,3)" oninput="formatPhone(this)" placeholder="+7 (___) ___-__-__"></div>'+
     '<div class="field"><label>Паспорт (серия, номер, кем, когда)</label><input id="a-passport" placeholder="82 03 609108, УФМС Дагестан, 01.02.2009"></div>'+
     '<div class="field"><label>Товар / услуга *</label><input id="a-product" placeholder="Например: диван"></div>'+
-    '<div class="field"><label>Свидетель (ФИО)</label><input id="a-witness" placeholder="Необязательно"></div>'+
-    '<div class="anketa-preview"><div style="font-weight:700;margin-bottom:8px;color:#fff">Параметры рассрочки:</div>'+
-      '<div class="row"><span class="k">Стоимость</span><span class="v">'+fmtR(price)+'</span></div>'+
-      '<div class="row"><span class="k">Взнос</span><span class="v">'+fmtR(down)+'</span></div>'+
-      '<div class="row"><span class="k">Срок</span><span class="v">'+months+' мес.</span></div>'+promoRow+
-      '<div class="row"><span class="k">Платёж</span><span class="v">'+fmtR(c.monthly)+'</span></div>'+
-      '<div class="row"><span class="k">Итого</span><span class="v">'+fmtR(c.total)+'</span></div>'+
+    
+    '<div class="anketa-preview">'+
+      '<div style="font-weight:700;margin-bottom:8px;color:#fff">Ваша рассрочка:</div>'+
+      '<div class="row"><span class="k">Стоимость товара</span><span class="v">'+fmtR(price)+'</span></div>'+
+      '<div class="row"><span class="k">Вы вносите сейчас</span><span class="v">'+fmtR(down)+'</span></div>'+promoRow+
+      '<div class="row"><span class="k">Платёж в месяц</span><span class="v" style="font-size:18px;">'+fmtR(c.monthly)+'</span></div>'+
+      '<div class="row"><span class="k">Общая переплата</span><span class="v" style="opacity:0.8">'+fmtR(c.markup)+'</span></div>'+
+      '<div class="row"><span class="k">Итого к оплате</span><span class="v">'+fmtR(c.total)+'</span></div>'+
     '</div>'+
+
     '<button class="btn btn-dark" onclick="showContractForm()" style="margin-bottom:10px">📄 Сформировать договор</button>'+
     '<button class="btn btn-wa" onclick="sendToWhatsApp()">📲 Отправить заявку в WhatsApp</button>';
 
   document.getElementById('modalBg').classList.add('active');
 }
 
-/* ================= ДАННЫЕ ДЛЯ ДОГОВОРА ================= */
+/* ================= ДАННЫЕ ДЛЯ ДОГОВОРА (СВИДЕТЕЛЬ ЗДЕСЬ) ================= */
 function showContractForm(){
   var name = document.getElementById('a-name').value.trim();
   var phone = document.getElementById('a-phone').value.trim();
@@ -173,23 +176,24 @@ function showContractForm(){
   if(!name || !phone || !product){ toast('Заполните ФИО, телефон и товар'); return; }
   
   var passport = document.getElementById('a-passport').value.trim();
-  var witness = document.getElementById('a-witness').value.trim();
 
   document.getElementById('modalTitle').textContent = 'Данные для договора';
   document.getElementById('modalBody').innerHTML =
-    '<div style="color:var(--muted);font-size:13px;margin-bottom:14px;line-height:1.5">Проверьте данные. Они подставятся в договор.</div>'+
+    '<div style="color:var(--muted);font-size:13px;margin-bottom:14px;line-height:1.5">Проверьте данные для печати.</div>'+
     '<div class="field"><label>ФИО Продавца</label><input id="d-seller" value="Газиев Руслан Магомедович"></div>'+
+    '<div class="field"><label>Свидетель (ФИО)</label><input id="d-witness" placeholder="Необязательно"></div>'+
     '<div class="field"><label>Email для скана</label><input id="d-email" value="summa050505@gmail.com"></div>'+
     '<div class="field"><label>Город</label><input id="d-city" value="Хасавюрт"></div>'+
     '<div class="field"><label>Дата договора</label><input id="d-date" type="date" value="'+new Date().toISOString().slice(0,10)+'"></div>'+
-    '<button class="btn btn-dark" onclick="printContract(\''+name.replace(/'/g,"\\'")+'\',\''+phone.replace(/'/g,"\\'")+'\',\''+product.replace(/'/g,"\\'")+'\',\''+passport.replace(/'/g,"\\'")+'\',\''+witness.replace(/'/g,"\\'")+'\')" style="margin-bottom:10px">🖨 Распечатать договор</button>'+
+    '<button class="btn btn-dark" onclick="printContract(\''+name.replace(/'/g,"\\'")+'\',\''+phone.replace(/'/g,"\\'")+'\',\''+product.replace(/'/g,"\\'")+'\',\''+passport.replace(/'/g,"\\'")+'\')" style="margin-bottom:10px">🖨 Распечатать договор</button>'+
     '<button class="btn btn-outline" onclick="openAnketa()">← Назад к анкете</button>';
 }
 
 /* ================= ПЕЧАТЬ ДОГОВОРА ================= */
-function printContract(name, phone, product, passport, witness){
+function printContract(name, phone, product, passport){
   var d = window._anketaData;
   var seller = document.getElementById('d-seller').value || 'Газиев Руслан Магомедович';
+  var witness = document.getElementById('d-witness').value.trim();
   var email = document.getElementById('d-email').value || 'summa050505@gmail.com';
   var city = document.getElementById('d-city').value || 'Хасавюрт';
   var dateStr = document.getElementById('d-date').value;
@@ -234,7 +238,6 @@ function buildMessage(){
   var phone = document.getElementById('a-phone').value.trim();
   var product = document.getElementById('a-product').value.trim();
   var passport = document.getElementById('a-passport').value.trim();
-  var witness = document.getElementById('a-witness').value.trim();
   var d = window._anketaData;
 
   var promoLine = FREE_MONTHS > 0 ? '🎁 *Акция:* первые ' + FREE_MONTHS + ' мес. без наценки\n' : '';
@@ -252,7 +255,6 @@ function buildMessage(){
     '• ФИО: ' + name + '\n'+
     '• Телефон: ' + phone + '\n'+
     (passport ? '• Паспорт: ' + passport + '\n' : '') +
-    (witness ? '• Свидетель: ' + witness + '\n' : '') +
     '\nПрошу связаться для оформления.';
 }
 
