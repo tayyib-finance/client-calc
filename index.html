@@ -7,137 +7,81 @@
 <title>Рассрочка без % · Tayyib Finance</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-:root{--bg:#f0f1ec;--card:#fff;--dark:#2d3a34;--lime:#c8dd5f;
---text:#1a1f1c;--muted:#7a8079;--line:#e5e6e0;}
-html,body{background:var(--bg);color:var(--text);font-size:15px;
-font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
-line-height:1.5;-webkit-font-smoothing:antialiased;}
+:root{--bg:#f0f1ec;--card:#fff;--dark:#2d3a34;--lime:#c8dd5f;--text:#1a1f1c;--muted:#7a8079;--line:#e5e6e0;}
+html,body{background:var(--bg);color:var(--text);font-size:15px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
 body{padding-bottom:40px;}
 .app{max-width:480px;margin:0 auto;padding:16px;}
-.hero{background:linear-gradient(135deg,#2d3a34 0%,#1a241f 100%);
-color:#fff;border-radius:24px;padding:22px;margin-bottom:18px;
-display:flex;align-items:center;gap:14px;}
-.hero .logo{width:52px;height:52px;border-radius:15px;background:var(--lime);
-color:var(--dark);display:flex;align-items:center;justify-content:center;
-font-size:26px;font-weight:800;flex-shrink:0;}
-.hero .title{font-size:19px;font-weight:800;letter-spacing:-.3px;
-margin-bottom:2px;}
+.hero{background:linear-gradient(135deg,#2d3a34 0%,#1a241f 100%);color:#fff;border-radius:24px;padding:22px;margin-bottom:18px;display:flex;align-items:center;gap:14px;}
+.hero .logo{width:52px;height:52px;border-radius:15px;background:var(--lime);color:var(--dark);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;flex-shrink:0;}
+.hero .title{font-size:19px;font-weight:800;letter-spacing:-.3px;margin-bottom:2px;}
 .hero .sub{font-size:12px;opacity:.75;line-height:1.35;}
-.promo-badge{background:linear-gradient(135deg,#c8dd5f 0%,#a8c93f 100%);
-color:var(--dark);border-radius:16px;padding:14px 18px;margin-bottom:14px;
-display:flex;align-items:center;gap:12px;font-weight:700;font-size:14px;
-line-height:1.35;}
+.promo-badge{background:linear-gradient(135deg,#c8dd5f 0%,#a8c93f 100%);color:var(--dark);border-radius:16px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;font-weight:700;font-size:14px;line-height:1.35;}
 .promo-badge .gift{font-size:24px;flex-shrink:0;}
-.calc-box{background:linear-gradient(135deg,#2d3a34 0%,#1a241f 100%);
-color:#fff;border-radius:24px;padding:22px 20px;margin-bottom:14px;}
-.calc-box .calc-title{font-size:22px;font-weight:800;margin-bottom:18px;
-letter-spacing:-.4px;}
+.calc-box{background:linear-gradient(135deg,#2d3a34 0%,#1a241f 100%);color:#fff;border-radius:24px;padding:22px 20px;margin-bottom:14px;}
+.calc-box .calc-title{font-size:22px;font-weight:800;margin-bottom:18px;letter-spacing:-.4px;}
 .calc-box .lbl{font-size:14px;font-weight:600;margin-bottom:8px;opacity:.9;}
-.calc-box .num-field{background:#fff;color:var(--dark);border-radius:12px;
-padding:14px 16px;font-size:20px;font-weight:700;text-align:right;
-border:none;width:100%;margin-bottom:6px;}
-.calc-box input[type=range]{-webkit-appearance:none;width:100%;height:6px;
-background:rgba(255,255,255,.25);border-radius:3px;padding:0;
-margin:0 0 18px;display:block;}
-.calc-box input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;
-width:26px;height:26px;background:#fff;border-radius:50%;cursor:pointer;
-border:3px solid var(--lime);box-shadow:0 1px 4px rgba(0,0,0,.3);}
-.calc-box input[type=range]::-moz-range-thumb{width:22px;height:22px;
-background:#fff;border-radius:50%;cursor:pointer;border:3px solid var(--lime);}
-.calc-result-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;
-margin-bottom:16px;}
-.calc-result-row .cell{background:rgba(255,255,255,.1);border-radius:14px;
-padding:12px 8px;text-align:center;}
-.calc-result-row .cell .k{font-size:10px;opacity:.75;margin-bottom:6px;
-line-height:1.2;font-weight:600;}
+.calc-box .num-field{background:#fff;color:var(--dark);border-radius:12px;padding:14px 16px;font-size:20px;font-weight:700;text-align:right;border:none;width:100%;margin-bottom:6px;}
+.calc-box input[type=range]{-webkit-appearance:none;width:100%;height:6px;background:rgba(255,255,255,.25);border-radius:3px;padding:0;margin:0 0 18px;display:block;}
+.calc-box input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;background:#fff;border-radius:50%;cursor:pointer;border:3px solid var(--lime);box-shadow:0 1px 4px rgba(0,0,0,.3);}
+.calc-box input[type=range]::-moz-range-thumb{width:22px;height:22px;background:#fff;border-radius:50%;cursor:pointer;border:3px solid var(--lime);}
+.calc-result-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;}
+.calc-result-row .cell{background:rgba(255,255,255,.1);border-radius:14px;padding:12px 8px;text-align:center;}
+.calc-result-row .cell .k{font-size:10px;opacity:.75;margin-bottom:6px;line-height:1.2;font-weight:600;}
 .calc-result-row .cell .v{font-size:16px;font-weight:800;color:var(--lime);}
-.calc-box .btn-white{background:#fff;color:var(--dark);border-radius:14px;
-padding:16px;font-weight:700;font-size:15px;border:none;width:100%;
-cursor:pointer;font-family:inherit;display:flex;align-items:center;
-justify-content:center;gap:8px;}
+.calc-box .btn-white{background:#fff;color:var(--dark);border-radius:14px;padding:16px;font-weight:700;font-size:15px;border:none;width:100%;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;}
 .calc-box .btn-white:active{opacity:.85;}
-.about-card{background:var(--card);border-radius:20px;padding:18px;
-margin-bottom:14px;}
+.calc-box .btn-dark-outline{background:transparent;color:var(--lime);border:1.5px solid var(--lime);border-radius:14px;padding:16px;font-weight:700;font-size:15px;width:100%;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;}
+.about-card{background:var(--card);border-radius:20px;padding:18px;margin-bottom:14px;}
 .about-card .card-title{font-size:16px;font-weight:800;margin-bottom:12px;}
-.about-item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;
-border-bottom:1px solid var(--line);}
+.about-item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);}
 .about-item:last-child{border-bottom:none;padding-bottom:0;}
-.about-item .icon{width:36px;height:36px;border-radius:10px;
-background:#e5f0d0;color:#5a7522;display:flex;align-items:center;
-justify-content:center;font-size:18px;flex-shrink:0;}
+.about-item .icon{width:36px;height:36px;border-radius:10px;background:#e5f0d0;color:#5a7522;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .about-item .text{flex:1;}
 .about-item .text .t{font-weight:700;font-size:14px;margin-bottom:2px;}
 .about-item .text .s{font-size:12px;color:var(--muted);line-height:1.4;}
 .hadith-item{padding:14px 0;border-bottom:1px solid var(--line);}
 .hadith-item:last-child{border-bottom:none;padding-bottom:0;}
-.hadith-text{font-size:14px;line-height:1.6;color:var(--text);
-font-style:italic;margin-bottom:6px;}
-.hadith-source{font-size:12px;color:var(--muted);font-weight:600;
-text-align:right;}
-.contact-card{background:var(--card);border-radius:20px;padding:18px;
-margin-bottom:14px;text-align:center;}
-.contact-card .card-title{font-size:14px;color:var(--muted);margin-bottom:8px;
-text-transform:uppercase;letter-spacing:.4px;font-weight:600;}
-.contact-card .phone{font-size:22px;font-weight:800;color:var(--dark);
-margin-bottom:6px;}
+.hadith-text{font-size:14px;line-height:1.6;color:var(--text);font-style:italic;margin-bottom:6px;}
+.hadith-source{font-size:12px;color:var(--muted);font-weight:600;text-align:right;}
+.contact-card{background:var(--card);border-radius:20px;padding:18px;margin-bottom:14px;text-align:center;}
+.contact-card .card-title{font-size:14px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px;font-weight:600;}
+.contact-card .phone{font-size:22px;font-weight:800;color:var(--dark);margin-bottom:6px;}
 .contact-card .hint{font-size:12px;color:var(--muted);}
-.modal-bg{position:fixed;inset:0;background:rgba(26,31,28,.5);z-index:100;
-display:none;align-items:flex-end;justify-content:center;}
+.modal-bg{position:fixed;inset:0;background:rgba(26,31,28,.5);z-index:100;display:none;align-items:flex-end;justify-content:center;}
 .modal-bg.active{display:flex;}
-.modal{background:var(--bg);width:100%;max-width:480px;
-border-radius:24px 24px 0 0;padding:20px;max-height:92vh;overflow-y:auto;
-animation:slideUp .25s ease-out;}
+.modal{background:var(--bg);width:100%;max-width:480px;border-radius:24px 24px 0 0;padding:20px;max-height:92vh;overflow-y:auto;animation:slideUp .25s ease-out;}
 @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.modal-head{display:flex;align-items:center;justify-content:space-between;
-margin-bottom:18px;}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
 .modal-head h3{font-size:20px;font-weight:800;}
-.modal-close{background:none;border:none;font-size:28px;color:var(--muted);
-cursor:pointer;line-height:1;padding:0 6px;}
-label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;
-font-weight:600;}
-input,select,textarea{width:100%;padding:14px 16px;border:1px solid var(--line);
-border-radius:14px;font-size:15px;font-family:inherit;background:var(--card);
-color:var(--text);margin-bottom:12px;}
+.modal-close{background:none;border:none;font-size:28px;color:var(--muted);cursor:pointer;line-height:1;padding:0 6px;}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:600;}
+input,select,textarea{width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:14px;font-size:15px;font-family:inherit;background:var(--card);color:var(--text);margin-bottom:12px;}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--dark);}
 .field{margin-bottom:14px;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
-padding:14px 20px;border-radius:14px;border:none;font-size:15px;
-font-weight:700;font-family:inherit;cursor:pointer;width:100%;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border-radius:14px;border:none;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;}
 .btn-dark{background:var(--dark);color:#fff;}
 .btn-wa{background:#25D366;color:#fff;}
 .btn-outline{background:transparent;color:var(--text);border:1px solid var(--line);}
 .btn:active{opacity:.85;}
-.anketa-preview{background:var(--dark);color:#fff;border-radius:16px;
-padding:16px;margin-bottom:14px;font-size:13px;line-height:1.6;}
-.anketa-preview .row{display:flex;justify-content:space-between;
-padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);}
+.anketa-preview{background:var(--dark);color:#fff;border-radius:16px;padding:16px;margin-bottom:14px;font-size:13px;line-height:1.6;}
+.anketa-preview .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);}
 .anketa-preview .row:last-child{border-bottom:none;}
 .anketa-preview .row .k{opacity:.7;}
 .anketa-preview .row .v{font-weight:700;color:var(--lime);}
-.anketa-preview .row .v.promo{color:#c8dd5f;}
-.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
-background:var(--dark);color:#fff;padding:12px 20px;border-radius:14px;
-font-size:14px;z-index:999;opacity:0;transition:opacity .25s;
-pointer-events:none;max-width:88%;text-align:center;}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:12px 20px;border-radius:14px;font-size:14px;z-index:999;opacity:0;transition:opacity .25s;pointer-events:none;max-width:88%;text-align:center;}
 .toast.show{opacity:1;}
-
-/* Печать договора */
 #printArea{display:none;}
 @media print{
   body *{visibility:hidden;}
   #printArea,#printArea *{visibility:visible;}
-  #printArea{display:block!important;position:absolute;left:0;top:0;width:100%;
-    padding:20mm;font-family:'Times New Roman',serif;font-size:12pt;
-    color:black;line-height:1.6;}
+  #printArea{display:block!important;position:absolute;left:0;top:0;width:100%;padding:20mm;font-family:'Times New Roman',serif;font-size:12pt;color:black;line-height:1.6;}
   #printArea h1{text-align:center;font-size:16pt;margin-bottom:12px;}
-  #printArea .sub{text-align:center;font-style:italic;font-size:11pt;
-    margin-bottom:20px;}
-  #printArea ol {padding-left:22px <;}
-  #printArea oldiv li{margin-bottom:10px; classtext-align:justify;}
-  #print="Area .signs{margin-topabout:40px;display:flex;justify-content:space-between;}
+  #printArea .sub{text-align:center;font-style:italic;font-size:11pt;margin-bottom:20px;}
+  #printArea ol{padding-left:22px;}
+  #printArea ol li{margin-bottom:10px;text-align:justify;}
+  #printArea .signs{margin-top:40px;display:flex;justify-content:space-between;}
   #printArea .sign-col{width:48%;}
-  #printArea .sign-line{border-bottom:1px solid black;height:40px;
-    margin-bottom:4px;}
+  #printArea .sign-line{border-bottom:1px solid black;height:40px;margin-bottom:4px;}
   #printArea .sign-label{font-size:9pt;text-align:center;color:#555;}
   #printArea .footer{margin-top:30px;text-align:center;font-size:11pt;}
 }
@@ -145,7 +89,6 @@ pointer-events:none;max-width:88%;text-align:center;}
 </head>
 <body>
 <div class="app">
-
   <div class="hero">
     <div class="logo">Σ</div>
     <div>
@@ -153,91 +96,42 @@ pointer-events:none;max-width:88%;text-align:center;}
       <div class="sub">по нормам Шариата · Мурабаха</div>
     </div>
   </div>
-
   <div id="promoBlock"></div>
-
   <div class="calc-box">
     <div class="calc-title">Рассчитайте рассрочку</div>
-
     <div class="lbl">Стоимость товара или услуги:</div>
-    <input type="text" class="num-field" id="c-price-v" value="50 000 р."
-      onfocus="editNum('price')" onblur="applyNum('price')">
-    <input type="range" id="c-price" min="0" max="10000000" step="1"
-      value="50000" oninput="syncFromRange('price')">
-
+    <input type="text" class="num-field" id="c-price-v" value="50 000 р." onfocus="editNum('price')" onblur="applyNum('price')">
+    <input type="range" id="c-price" min="0" max="10000000" step="1" value="50000" oninput="syncFromRange('price')">
     <div class="lbl">Первоначальный взнос (мин. 20%):</div>
-    <input type="text" class="num-field" id="c-down-v" value="10 000 р."
-      onfocus="editNum('down')" onblur="applyNum('down')">
-    <input type="range" id="c-down" min="0" max="10000000" step="1"
-      value="10000" oninput="syncFromRange('down')">
-
+    <input type="text" class="num-field" id="c-down-v" value="10 000 р." onfocus="editNum('down')" onblur="applyNum('down')">
+    <input type="range" id="c-down" min="0" max="10000000" step="1" value="10000" oninput="syncFromRange('down')">
     <div class="lbl">Срок рассрочки (мес.):</div>
-    <input type="text" class="num-field" id="c-months-v" value="6"
-      onfocus="editNum('months')" onblur="applyNum('months')">
-    <input type="range" id="c-months" min="1" max="24" step="1"
-      value="6" oninput="syncFromRange('months')">
-
+    <input type="text" class="num-field" id="c-months-v" value="6" onfocus="editNum('months')" onblur="applyNum('months')">
+    <input type="range" id="c-months" min="1" max="24" step="1" value="6" oninput="syncFromRange('months')">
     <div class="calc-result-row">
-      <div class="cell"><div class="k">Ежемес.<br>платёж</div>
-        <div class="v" id="c-monthly">0 р.</div></div>
-      <div class="cell"><div class="k">Торговая<br>наценка</div>
-        <div class="v" id="c-markup">0 р.</div></div>
-      <div class="cell"><div class="k">Общая<br>стоимость</div>
-        <div class="v" id="c-total">0 р.</div></div>
+      <div class="cell"><div class="k">Ежемес.<br>платёж</div><div class="v" id="c-monthly">0 р.</div></div>
+      <div class="cell"><div class="k">Торговая<br>наценка</div><div class="v" id="c-markup">0 р.</div></div>
+      <div class="cell"><div class="k">Общая<br>стоимость</div><div class="v" id="c-total">0 р.</div></div>
     </div>
-
-    <button class="btn-white" onclick="openAnketa()">
-      ✍️ Заполнить анкету
-    </button>
+    <button class="btn-white" onclick="openAnketa()">✍️ Заполнить анкету</button>
+    <button class="btn-dark-outline" onclick="openAnketa(true)">📄 Сразу договор</button>
   </div>
-
--card">
+  <div class="about-card">
     <div class="card-title">О компании</div>
-    <div class="about-item">
-      <div class="icon">✓</div>
-      <div class="text">
-        <div class="t">Без Риба</div>
-        <div class="s">Рассрочка без процентов, строго по шариату</div>
-      </div>
-    </div>
-    <div class="about-item">
-      <div class="icon">₽</div>
-      <div class="text">
-        <div class="t">Без скрытых платежей</div>
-        <div class="s">Только фиксированные платежи — без сюрпризов</div>
-      </div>
-    </div>
-    <div class="about-item">
-      <div class="icon">🛡</div>
-      <div class="text">
-        <div class="t">Без пени и штрафов</div>
-        <div class="s">Платите по графику — без лишних забот</div>
-      </div>
-    </div>
+    <div class="about-item"><div class="icon">✓</div><div class="text"><div class="t">Без Риба</div><div class="s">Рассрочка без процентов, строго по шариату</div></div></div>
+    <div class="about-item"><div class="icon">₽</div><div class="text"><div class="t">Без скрытых платежей</div><div class="s">Только фиксированные платежи — без сюрпризов</div></div></div>
+    <div class="about-item"><div class="icon">🛡</div><div class="text"><div class="t">Без пени и штрафов</div><div class="s">Платите по графику — без лишних забот</div></div></div>
   </div>
-
   <div class="about-card">
     <div class="card-title">📖 О важности долга</div>
-    <div class="hadith-item">
-      <div class="hadith-text">
-        «Шахиду прощаются все грехи, кроме долга»
-      </div>
-      <div class="hadith-source">— Сахих Муслим</div>
-    </div>
-    <div class="hadith-item">
-      <div class="hadith-text">
-        «Душа верующего будет висеть из-за его долга, пока он не будет выплачен»
-      </div>
-      <div class="hadith-source">— Сунан ат-Тирмизи</div>
-    </div>
+    <div class="hadith-item"><div class="hadith-text">«Шахиду прощаются все грехи, кроме долга»</div><div class="hadith-source">— Сахих Муслим</div></div>
+    <div class="hadith-item"><div class="hadith-text">«Душа верующего будет висеть из-за его долга, пока он не будет выплачен»</div><div class="hadith-source">— Сунан ат-Тирмизи</div></div>
   </div>
-
   <div class="contact-card">
     <div class="card-title">Связаться с нами</div>
     <div class="phone">+7 988 783-66-77</div>
     <div class="hint">WhatsApp · звонок · SMS</div>
   </div>
-
 </div>
 
 <div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
@@ -249,335 +143,9 @@ pointer-events:none;max-width:88%;text-align:center;}
     <div id="modalBody"></div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 <div id="printArea"></div>
 
-<script>
-var SELLER_PHONE = '79887836677';
-
-var SHOPS = {
-  '1': {rate:0.05, freeMonths:0},
-  '2': {rate:0.037, freeMonths:0},
-  '3': {rate:0.05, freeMonths:3},
-  '4': {rate:0.037, freeMonths:3}
-};
-var DEFAULT_RATE = 0.05;
-var DEFAULT_FREE = 0;
-var MAX_PRICE = 10000000;
-var MIN_PRICE = 1000;
-
-var urlParams = new URLSearchParams(window.location.search);
-var shopCode = urlParams.get('m') || 'default';
-var SHOP = SHOPS[shopCode] || {rate:DEFAULT_RATE, freeMonths:DEFAULT_FREE};
-var RATE = SHOP.rate;
-var FREE_MONTHS = SHOP.freeMonths;
-
-function fmt(n){ return Math.round(n).toLocaleString('ru-RU'); }
-function fmtR(n){ return fmt(n) + ' р.'; }
-function toast(msg){
-  var t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  clearTimeout(window._tt);
-  window._tt = setTimeout(function(){ t.classList.remove('show'); }, 2000);
-}
-
-/* Сумма прописью */
-function numToWords(n){
-  n = Math.round(n);
-  if(n === 0) return 'ноль';
-  var ones = ['','один','два','три','четыре','пять','шесть','семь',
-    'восемь','девять','десять','одиннадцать','двенадцать','тринадцать',
-    'четырнадцать','пятнадцать','шестнадцать','семнадцать',
-    'восемнадцать','девятнадцать'];
-  var tens = ['','','двадцать','тридцать','сорок','пятьдесят',
-    'шестьдесят','семьдесят','восемьдесят','девяносто'];
-  var hunds = ['','сто','двести','триста','четыреста','пятьсот',
-    'шестьсот','семьсот','восемьсот','девятьсот'];
-
-  function chunk(num){
-    var res = [];
-    if(num >= 100){
-      res.push(hunds[Math.floor(num/100)]);
-      num = num % 100;
-    }
-    if(num >= 20){
-      res.push(tens[Math.floor(num/10)]);
-      num = num % 10;
-      if(num > 0) res.push(ones[num]);
-    } else if(num > 0){
-      res.push(ones[num]);
-    }
-    return res.join(' ');
-  }
-
-  function decline(num, forms){
-    var n100 = num % 100;
-    var n10 = num % 10;
-    if(n100 >= 11 && n100 <= 19) return forms[2];
-    if(n10 === 1) return forms[0];
-    if(n10 >= 2 && n10 <= 4) return forms[1];
-    return forms[2];
-  }
-
-  var parts = [];
-  var millions = Math.floor(n / 1000000);
-  var thousands = Math.floor((n % 1000000) / 1000);
-  var units = n % 1000;
-
-  if(millions > 0){
-    parts.push(chunk(millions) + ' ' + decline(millions,
-      ['миллион','миллиона','миллионов']));
-  }
-  if(thousands > 0){
-    parts.push(chunk(thousands) + ' ' + decline(thousands,
-      ['тысяча','тысячи','тысяч']));
-  }
-  if(units > 0){
-    parts.push(chunk(units));
-  }
-  return parts.join(' ');
-}
-
-/* Расчёт */
-function calcMurabaha(price, down, months){
-  var fin = price - down;
-  var paidMonths = Math.max(0, months - FREE_MONTHS);
-  var markup = fin * RATE * paidMonths;
-  var total = price + markup;
-  var monthly = Math.round((fin + markup) / months);
-  return {fin:fin, markup:markup, total:total, monthly:monthly};
-}
-
-/* Автоформат телефона */
-function formatPhone(input){
-  var v = input.value.replace(/\D/g,'');
-  if(v.indexOf('7') === 0 || v.indexOf('8') === 0) v = v.slice(1);
-  v = v.slice(0,10);
-  var out = '+7';
-  if(v.length > 0) out += ' (' + v.slice(0,3);
-  if(v.length >= 3) out += ')';
-  if(v.length > 3) out += ' ' + v.slice(3,6);
-  if(v.length > 6) out += '-' + v.slice(6,8);
-  if(v.length > 8) out += '-' + v.slice(8,10);
-  input.value = out;
-}
-
-/* Калькулятор */
-function syncFromRange(which){
-  var priceEl = document.getElementById('c-price');
-  var downEl = document.getElementById('c-down');
-  var monthsEl = document.getElementById('c-months');
-  if(which === 'price'){
-    downEl.max = +priceEl.value;
-    if(+downEl.value < +priceEl.value * 0.2){
-      downEl.value = Math.round(+priceEl.value * 0.2);
-    }
-  }
-  var price = +priceEl.value;
-  var down = Math.min(+downEl.value, price);
-  var months = +monthsEl.value;
-  document.getElementById('c-price-v').value = fmtR(price);
-  document.getElementById('c-down-v').value = fmtR(down);
-  document.getElementById('c-months-v').value = months;
-  updateCalc(price, down, months);
-}
-function updateCalc(price, down, months){
-  var c = calcMurabaha(price, down, months);
-  document.getElementById('c-monthly').textContent = fmtR(c.monthly);
-  document.getElementById('c-markup').textContent = fmtR(c.markup);
-  document.getElementById('c-total').textContent = fmtR(c.total);
-}
-function editNum(which){
-  var map = {price:'c-price-v', down:'c-down-v', months:'c-months-v'};
-  var el = document.getElementById(map[which]);
-  el.value = el.value.replace(/\D/g,'');
-  el.select();
-}
-function applyNum(which){
-  var mapR = {price:'c-price', down:'c-down', months:'c-months'};
-  var mapV = {price:'c-price-v', down:'c-down-v', months:'c-months-v'};
-  var rangeEl = document.getElementById(mapR[which]);
-  var valueEl = document.getElementById(mapV[which]);
-  var val = parseInt(valueEl.value.replace(/\D/g,'')) || 0;
-  if(which === 'months'){ val = Math.max(1, Math.min(24, val)); }
-  if(which === 'price'){ val = Math.max(MIN_PRICE, Math.min(MAX_PRICE, val)); }
-  if(which === 'down'){
-    var p = +document.getElementById('c-price').value;
-    val = Math.max(Math.round(p * 0.2), Math.min(p, val));
-  }
-  rangeEl.value = val;
-  syncFromRange(which === 'down' ? 'price' : which);
-  if(which === 'down') syncFromRange('price');
-}
-
-function renderPromo(){
-  var el = document.getElementById('promoBlock');
-  if(!el) return;
-  if(FREE_MONTHS > 0){
-    el.innerHTML =
-      '<div class="promo-badge">'+
-      '<div class="gift">🎁</div>'+
-      '<div>Первые ' + FREE_MONTHS + ' месяца без наценки — '+
-      'вы платите только стоимость товара</div>'+
-      '</div>';
-  } else {
-    el.innerHTML = '';
-  }
-}
-
-/* АНКЕТА */
-function openAnketa(){
-  var price = +document.getElementById('c-price').value;
-  var down = +document.getElementById('c-down').value;
-  var months = +document.getElementById('c-months').value;
-  var c = calcMurabaha(price, down, months);
-
-  window._anketaData = {price:price, down:down, months:months,
-    markup:c.markup, total:c.total, monthly:c.monthly};
-
-  var promoRow = '';
-  if(FREE_MONTHS > 0){
-    promoRow = '<div class="row"><span class="k">Бесплатных месяцев</span>'+
-      '<span class="v promo">'+FREE_MONTHS+' 🎁</span></div>';
-  }
-
-  document.getElementById('modalTitle').textContent = 'Анкета клиента';
-  document.getElementById('modalBody').innerHTML =
-    '<div style="color:var(--muted);font-size:13px;margin-bottom:14px;'+
-    'line-height:1.5">'+
-    'Заполните данные — мы свяжемся с вами для оформления рассрочки.'+
-    '</div>'+
-    '<div class="field"><label>ФИО *</label>'+
-      '<input id="a-name" placeholder="Фамилия Имя Отчество"></div>'+
-    '<div class="field"><label>Телефон *</label>'+
-      '<input id="a-phone" type="tel" value="+7 " '+
-      'onfocus="if(this.value===\'+7 \')this.setSelectionRange(3,3)" '+
-      'oninput="formatPhone(this)" '+
-      'placeholder="+7 (___) ___-__-__"></div>'+
-    '<div class="field"><label>Дата рождения</label>'+
-      '<input id="a-birth" type="date"></div>'+
-    '<div class="field"><label>Паспорт (серия/номер, кем, когда)</label>'+
-      '<input id="a-passport" placeholder="82 03 609108, УФМС Дагестан, 01.02.2009"></div>'+
-    '<div class="field"><label>Товар / услуга *</label>'+
-      '<input id="a-product" placeholder="Например: диван"></div>'+
-    '<div class="field"><label>Место покупки</label>'+
-      '<input id="a-shop" placeholder="Например: магазин Мебель-Дагестан"></div>'+
-    '<div class="anketa-preview">'+
-      '<div style="font-weight:700;margin-bottom:8px;color:#fff">'+
-      'Параметры рассрочки:</div>'+
-      '<div class="row"><span class="k">Стоимость товара</span>'+
-        '<span class="v">'+fmtR(price)+'</span></div>'+
-      '<div class="row"><span class="k">Первый взнос</span>'+
-        '<span class="v">'+fmtR(down)+'</span></div>'+
-      '<div class="row"><span class="k">Срок</span>'+
-        '<span class="v">'+months+' мес.</span></div>'+
-      promoRow+
-      '<div class="row"><span class="k">Ежемесячный платёж</span>'+
-        '<span class="v">'+fmtR(c.monthly)+'</span></div>'+
-      '<div class="row"><span class="k">Итого к оплате</span>'+
-        '<span class="v">'+fmtR(c.total)+'</span></div>'+
-    '</div>'+
-    '<button class="btn btn-dark" onclick="showContractForm()" '+
-      'style="margin-bottom:10px">📄 Сформировать договор</button>'+
-    '<button class="btn btn-wa" onclick="sendToWhatsApp()" '+
-      'style="margin-bottom:10px">📲 Отправить в WhatsApp</button>'+
-    '<button class="btn btn-outline" onclick="copyData()">'+
-      '📋 Скопировать текст заявки</button>';
-
-  document.getElementById('modalBg').classList.add('active');
-}
-function closeModal(){
-  document.getElementById('modalBg').classList.remove('active');
-}
-
-/* Показать форму договора (доп. данные) */
-function showContractForm(){
-  var name = document.getElementById('a-name').value.trim();
-  var phone = document.getElementById('a-phone').value.trim();
-  var product = document.getElementById('a-product').value.trim();
-
-  if(!name){ toast('Введите ФИО'); return; }
-  if(phone.length < 18){ toast('Введите телефон'); return; }
-  if(!product){ toast('Укажите товар'); return; }
-
-  var birth = document.getElementById('a-birth').value;
-  var passport = document.getElementById('a-passport').value.trim();
-  var shop = document.getElementById('a-shop').value.trim();
-
-  document.getElementById('modalTitle').textContent = 'Данные для договора';
-  document.getElementById('modalBody').innerHTML =
-    '<div style="color:var(--muted);font-size:13px;margin-bottom:14px;'+
-    'line-height:1.5">'+
-    'Проверьте и заполните данные продавца и место.'+
-    '</div>'+
-    '<div class="field"><label>ФИО Продавца *</label>'+
-      '<input id="d-seller" value="Газиев Руслан Магомедович"></div>'+
-    '<div class="field"><label>Email для скана договора</label>'+
-      '<input id="d-email" value="summa050505@gmail.com"></div>'+
-    '<div class="field"><label>Город</label>'+
-      '<input id="d-city" value="Хасавюрт"></div>'+
-    '<div class="field"><label>Дата договора</label>'+
-      '<input id="d-date" type="date" value="'+new Date().toISOString().slice(0,10)+'"></div>'+
-    '<div class="field"><label>Дата первого платежа</label>'+
-      '<input id="d-start" type="date" value="'+new Date().toISOString().slice(0,10)+'"></div>'+
-    '<button class="btn btn-dark" onclick="printContract(\''+
-      escape(name)+'\',\''+escape(phone)+'\',\''+escape(product)+'\','+
-      '\''+escape(birth)+'\',\''+escape(passport)+'\',\''+escape(shop)+'\')" '+
-      'style="margin-bottom:10px">🖨 Распечатать договор</button>'+
-    '<button class="btn btn-outline" onclick="openAnketa()">'+
-      '← Назад к анкете</button>';
-}
-
-function escape(s){
-  return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-}
-
-/* Печать договора */
-function printContract(name, phone, product, birth, passport, shop){
-  var d = window._anketaData;
-  var seller = document.getElementById('d-seller').value.trim() ||
-    'Газиев Руслан Магомедович';
-  var email = document.getElementById('d-email').value.trim() ||
-    'summa050505@gmail.com';
-  var city = document.getElementById('d-city').value.trim() || 'Хасавюрт';
-  var dateStr = document.getElementById('d-date').value;
-  var startStr = document.getElementById('d-start').value;
-
-  var today = new Date();
-  if(dateStr) today = new Date(dateStr);
-  var todayFmt = today.getDate() + ' ' +
-    ['января','февраля','марта','апреля','мая','июня','июля',
-     'августа','сентября','октября','ноября','декабря'][today.getMonth()] +
-    ' ' + today.getFullYear() + ' г.';
-
-  var start = new Date();
-  if(startStr) start = new Date(startStr);
-  var endDate = new Date(start.getFullYear(), start.getMonth() + d.months,
-    start.getDate());
-  var endFmt = endDate.getDate() + ' ' +
-    ['января','февраля','марта','апреля','мая','июня','июля',
-     'августа','сентября','октября','ноября','декабря'][endDate.getMonth()] +
-    ' ' + endDate.getFullYear() + ' г.';
-
-  var totalWords = numToWords(d.total);
-  var monthlyWords = numToWords(d.monthly);
-
-  var passportStr = passport ? ', паспорт ' + passport : '';
-
-  document.getElementById('printArea').innerHTML =
-    '<h1>ДОГОВОР</h1>'+
-    '<div class="sub">С именем Аллаха Милостивого и Милосердного.</div>'+
-    '<p style="text-align:right;margin-bottom:16px">г. ' + city +
-      ' · ' + todayFmt + '</p>'+
-    '<ol>'+
-    '<li>Я, <b>' + seller + '</b>, отдаю в рассрочку <b>' + name + '</b>' +
-      passportStr + ' товар: <b>' + product + '</b> на сумму <b>' +
-      fmt(d.total) + ' (' + totalWords + ') рублей</b> на срок <b>' +
-      d.months + ' месяцев</b>.</li>'+
-    '<li>Сумма ежемесячного платежа в течение ' + d.months +
-      ' месяцев составляет <b>' + fmt(d.monthly) + ' (' + monthlyWords +
-      ') рублей</b>.</li>'+
-    '<li>Окончательный день оплаты <b>' + endFmt + '</b>.</li>'+
-    '<li>В случае резкого удешевления рубля (девальвация) в период '+
-      'действия договора, будем рассматривать этот вопрос в Шариатском су
+<script src="app.js"></script>
+</body>
+</html>
