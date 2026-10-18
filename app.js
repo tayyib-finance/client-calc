@@ -136,7 +136,7 @@ function closeModal(){
   if(m) m.classList.remove('active');
 }
 
-/* ================= АНКЕТА (БЕЗ СВИДЕТЕЛЯ) ================= */
+/* ================= АНКЕТА (С МАГАЗИНОМ) ================= */
 function openAnketa(){
   var price = +document.getElementById('c-price').value;
   var down = +document.getElementById('c-down').value;
@@ -150,8 +150,8 @@ function openAnketa(){
   document.getElementById('modalBody').innerHTML =
     '<div class="field"><label>ФИО *</label><input id="a-name" placeholder="Фамилия Имя Отчество"></div>'+
     '<div class="field"><label>Телефон *</label><input id="a-phone" type="tel" value="+7 " onfocus="if(this.value===\'+7 \')this.setSelectionRange(3,3)" oninput="formatPhone(this)" placeholder="+7 (___) ___-__-__"></div>'+
-    '<div class="field"><label>Паспорт (серия, номер, кем, когда)</label><input id="a-passport" placeholder="82 03 609108, УФМС Дагестан, 01.02.2009"></div>'+
     '<div class="field"><label>Товар / услуга *</label><input id="a-product" placeholder="Например: диван"></div>'+
+    '<div class="field"><label>Место покупки (магазин)</label><input id="a-shop" placeholder="Например: DNS, Мебель-Дагестан"></div>'+
     
     '<div class="anketa-preview">'+
       '<div style="font-weight:700;margin-bottom:8px;color:#fff">Ваша рассрочка:</div>'+
@@ -162,53 +162,85 @@ function openAnketa(){
       '<div class="row"><span class="k">Итого к оплате</span><span class="v">'+fmtR(c.total)+'</span></div>'+
     '</div>'+
 
-    '<button class="btn btn-dark" onclick="showContractForm()" style="margin-bottom:10px">📄 Сформировать договор</button>'+
+    '<button class="btn btn-dark" onclick="showContractForm()" style="margin-bottom:10px">📄 Перейти к заполнению паспорта</button>'+
     '<button class="btn btn-wa" onclick="sendToWhatsApp()">📲 Отправить заявку в WhatsApp</button>';
 
   document.getElementById('modalBg').classList.add('active');
 }
 
-/* ================= ДАННЫЕ ДЛЯ ДОГОВОРА (СВИДЕТЕЛЬ ЗДЕСЬ) ================= */
+/* ================= ДАННЫЕ ПАСПОРТА ================= */
 function showContractForm(){
   var name = document.getElementById('a-name').value.trim();
   var phone = document.getElementById('a-phone').value.trim();
   var product = document.getElementById('a-product').value.trim();
-  if(!name || !phone || !product){ toast('Заполните ФИО, телефон и товар'); return; }
+  var shop = document.getElementById('a-shop').value.trim();
   
-  var passport = document.getElementById('a-passport').value.trim();
+  if(!name || !phone || !product){ toast('Заполните ФИО, телефон и товар в анкете'); return; }
 
-  document.getElementById('modalTitle').textContent = 'Данные для договора';
+  document.getElementById('modalTitle').textContent = 'Паспортные данные';
   document.getElementById('modalBody').innerHTML =
-    '<div style="color:var(--muted);font-size:13px;margin-bottom:14px;line-height:1.5">Проверьте данные для печати.</div>'+
+    '<div style="color:var(--muted);font-size:13px;margin-bottom:14px;line-height:1.5">Заполните данные точно как в паспорте.</div>'+
+    
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">'+
+      '<div class="field"><label>Серия *</label><input id="p-seria" placeholder="82 03" maxlength="5"></div>'+
+      '<div class="field"><label>Номер *</label><input id="p-number" placeholder="609108" maxlength="6"></div>'+
+    '</div>'+
+    
+    '<div class="field"><label>Дата выдачи *</label><input id="p-date" type="date"></div>'+
+    '<div class="field"><label>Кем выдан *</label><input id="p-issued" placeholder="УФМС России по Респ. Дагестан..."></div>'+
+    '<div class="field"><label>Код подразделения</label><input id="p-code" placeholder="050-001" maxlength="7"></div>'+
+    '<div class="field"><label>Место регистрации</label><input id="p-reg" placeholder="с. Хасавюрт, ул. Ленина 12"></div>'+
+    
+    '<hr style="border:none;border-top:1px solid var(--line);margin:16px 0;">'+
+    
     '<div class="field"><label>ФИО Продавца</label><input id="d-seller" value="Газиев Руслан Магомедович"></div>'+
     '<div class="field"><label>Свидетель (ФИО)</label><input id="d-witness" placeholder="Необязательно"></div>'+
     '<div class="field"><label>Email для скана</label><input id="d-email" value="summa050505@gmail.com"></div>'+
     '<div class="field"><label>Город</label><input id="d-city" value="Хасавюрт"></div>'+
-    '<div class="field"><label>Дата договора</label><input id="d-date" type="date" value="'+new Date().toISOString().slice(0,10)+'"></div>'+
-    '<button class="btn btn-dark" onclick="printContract(\''+name.replace(/'/g,"\\'")+'\',\''+phone.replace(/'/g,"\\'")+'\',\''+product.replace(/'/g,"\\'")+'\',\''+passport.replace(/'/g,"\\'")+'\')" style="margin-bottom:10px">🖨 Распечатать договор</button>'+
+    
+    '<button class="btn btn-dark" onclick="printContract(\''+name.replace(/'/g,"\\'")+'\',\''+phone.replace(/'/g,"\\'")+'\',\''+product.replace(/'/g,"\\'")+'\',\''+shop.replace(/'/g,"\\'")+'\')" style="margin-bottom:10px">🖨 Сформировать и распечатать</button>'+
     '<button class="btn btn-outline" onclick="openAnketa()">← Назад к анкете</button>';
 }
 
 /* ================= ПЕЧАТЬ ДОГОВОРА ================= */
-function printContract(name, phone, product, passport){
+function printContract(name, phone, product, shop){
   var d = window._anketaData;
+  var ser = document.getElementById('p-seria').value.trim();
+  var num = document.getElementById('p-number').value.trim();
+  var pDate = document.getElementById('p-date').value;
+  var issued = document.getElementById('p-issued').value.trim();
+  var pCode = document.getElementById('p-code').value.trim();
+  var pReg = document.getElementById('p-reg').value.trim();
+  
   var seller = document.getElementById('d-seller').value || 'Газиев Руслан Магомедович';
   var witness = document.getElementById('d-witness').value.trim();
   var email = document.getElementById('d-email').value || 'summa050505@gmail.com';
   var city = document.getElementById('d-city').value || 'Хасавюрт';
-  var dateStr = document.getElementById('d-date').value;
   
-  var today = dateStr ? new Date(dateStr) : new Date();
+  var today = new Date();
   var monthsList = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
   var todayFmt = today.getDate() + ' ' + monthsList[today.getMonth()] + ' ' + today.getFullYear() + ' г.';
   
   var endDate = new Date(today.getFullYear(), today.getMonth() + d.months, today.getDate());
   var endFmt = endDate.getDate() + ' ' + monthsList[endDate.getMonth()] + ' ' + endDate.getFullYear() + ' г.';
 
+  var passportStr = '';
+  if(ser || num) passportStr += 'паспорт серия ' + ser + ' номер ' + num;
+  if(pDate) {
+    var pd = new Date(pDate);
+    passportStr += ', выдан ' + pd.getDate() + '.' + (pd.getMonth()+1) + '.' + pd.getFullYear();
+  }
+  if(issued) passportStr += ' ' + issued;
+  if(pCode) passportStr += ', код подразделения ' + pCode;
+  if(passportStr) passportStr = ', ' + passportStr;
+
+  var regStr = pReg ? ', зарегистрирован по адресу: ' + pReg : '';
+  var shopStr = shop ? ', приобретённый в магазине "' + shop + '"' : '';
+
   var html = '<h1>ДОГОВОР от ' + todayFmt + '</h1>'+
   '<div class="sub">С именем Аллаха Милостивого и Милосердного.</div>'+
   '<ol>'+
-  '<li>Я, <b>' + seller + '</b>' + (witness ? ' (свидетель <b>' + witness + '</b>)' : '') + ' отдаю в рассрочку <b>' + name + '</b>' + (passport ? ', паспорт ' + passport : '') + ' товар: <b>' + product + '</b> на сумму <b>' + fmt(d.total) + ' (' + numToWords(d.total) + ') рублей</b> на срок <b>' + d.months + ' месяцев</b>.</li>'+
+  '<li>Я, <b>' + seller + '</b>' + (witness ? ' (свидетель <b>' + witness + '</b>)' : '') + ' отдаю в рассрочку <b>' + name + '</b>' + passportStr + regStr + ' товар: <b>' + product + '</b>' + shopStr + ' на сумму <b>' + fmt(d.total) + ' (' + numToWords(d.total) + ') рублей</b> на срок <b>' + d.months + ' месяцев</b>.</li>'+
   '<li>Сумма ежемесячного платежа в течении ' + d.months + ' месяцев составляет <b>' + fmt(d.monthly) + ' (' + numToWords(d.monthly) + ') рублей</b>.</li>'+
   '<li>Окончательный день оплаты <b>' + endFmt + '</b>.</li>'+
   '<li>В случае резкого удешевления рубля (девальвация) в период действия договора, будем рассматривать этот вопрос в Шариатском суде.</li>'+
@@ -237,13 +269,15 @@ function buildMessage(){
   var name = document.getElementById('a-name').value.trim();
   var phone = document.getElementById('a-phone').value.trim();
   var product = document.getElementById('a-product').value.trim();
-  var passport = document.getElementById('a-passport').value.trim();
+  var shop = document.getElementById('a-shop') ? document.getElementById('a-shop').value.trim() : '';
   var d = window._anketaData;
 
   var promoLine = FREE_MONTHS > 0 ? '🎁 *Акция:* первые ' + FREE_MONTHS + ' мес. без наценки\n' : '';
+  var shopLine = shop ? '🏪 *Магазин:* ' + shop + '\n' : '';
 
   return 'Ассаляму алейкум! Хочу оформить рассрочку.\n\n'+
     '📦 *Товар:* ' + product + '\n' +
+    shopLine +
     '\n💰 *Параметры:*\n'+
     '• Стоимость: ' + fmtR(d.price) + '\n'+
     '• Первый взнос: ' + fmtR(d.down) + '\n'+
@@ -254,7 +288,6 @@ function buildMessage(){
     '\n👤 *Мои данные:*\n'+
     '• ФИО: ' + name + '\n'+
     '• Телефон: ' + phone + '\n'+
-    (passport ? '• Паспорт: ' + passport + '\n' : '') +
     '\nПрошу связаться для оформления.';
 }
 
